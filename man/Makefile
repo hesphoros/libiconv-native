@@ -3,34 +3,34 @@
 #### Start of system configuration section. ####
 
 # Directories used by "make":
-srcdir = @srcdir@
+srcdir = .
 
 # Directories used by "make install":
-prefix = @prefix@
+prefix = /usr/local
 local_prefix = /usr/local
-exec_prefix = @exec_prefix@
-datarootdir = @datarootdir@
-datadir = @datadir@
-mandir = @mandir@
-docdir = @docdir@
-htmldir = @htmldir@
+exec_prefix = ${prefix}
+datarootdir = ${prefix}/share
+datadir = ${datarootdir}
+mandir = ${datarootdir}/man
+docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
+htmldir = ${docdir}
 
 # Programs used by "make":
 RM = rm -f
-@SET_MAKE@
+
 
 # Programs used by "make install":
-INSTALL = @INSTALL@
-INSTALL_PROGRAM = @INSTALL_PROGRAM@
-INSTALL_DATA = @INSTALL_DATA@
-mkinstalldirs = $(SHELL) @top_srcdir@/build-aux/mkinstalldirs
+INSTALL = /usr/bin/install -c
+INSTALL_PROGRAM = ${INSTALL}
+INSTALL_DATA = ${INSTALL} -m 644
+mkinstalldirs = $(SHELL) ../build-aux/mkinstalldirs
 
 #### End of system configuration section. ####
 
-SHELL = @SHELL@
+SHELL = /bin/sh
 
 # Used by docdir.
-PACKAGE = @PACKAGE@
+PACKAGE = libiconv
 
 all :
 

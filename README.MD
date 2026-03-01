@@ -41,11 +41,32 @@ cmake --build build --config Release
 
 > **注意**：glibc (Linux) 和 macOS 系统库已内置 iconv。为避免冲突，建议安装到独立目录。
 
+#### 前置依赖
+
+```bash
+# Ubuntu/Debian
+sudo apt-get install -y build-essential gettext
+
+# CentOS/RHEL/Fedora
+sudo yum install -y gcc make gettext
+
+# macOS (使用 Homebrew)
+brew install gettext
+```
+
 #### 方式 1：autoconf（推荐）
 
 ```bash
-./configure --prefix=/opt/libiconv
+# 配置（默认安装到 /usr/local）
+bash ./configure
+
+# 或指定安装路径
+bash ./configure --prefix=/opt/libiconv
+
+# 编译
 make
+
+# 安装
 sudo make install
 ```
 
