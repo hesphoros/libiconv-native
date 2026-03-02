@@ -94,10 +94,34 @@ export DYLD_LIBRARY_PATH=/opt/libiconv/lib:$DYLD_LIBRARY_PATH  # macOS
 |------|--------|------|
 | `BUILD_SHARED_LIBS` | `ON` | 构建动态库 |
 | `ICONV_ENABLE_EXTRA` | `OFF` | 启用额外的编码支持 |
+| `ICONV_EMBED_MODE` | `OFF` | 嵌入模式（重命名符号避免冲突） |
+| `ICONV_EMBED_PREFIX` | `embed_` | 嵌入模式的符号前缀 |
 
 示例：
 ```bash
 cmake -B build -DICONV_ENABLE_EXTRA=ON
+```
+
+### 嵌入模式
+
+当你需要将 libiconv 静态链接到自己的项目中，且目标系统可能已有系统级 libiconv（如 macOS），可以启用嵌入模式来避免符号冲突：
+
+```bash
+cmake -B build -DBUILD_SHARED_LIBS=OFF -DICONV_EMBED_MODE=ON
+```
+
+嵌入模式会：
+1. 设置符号可见性为 hidden（仅对 GCC/Clang 有效）
+2. 将所有导出符号重命名，添加前缀（默认 `embed_`）
+
+例如：
+- `libiconv_open` → `embed_libiconv_open`
+- `libiconv` → `embed_libiconv`
+- `libiconv_close` → `embed_libiconv_close`
+
+自定义前缀：
+```bash
+cmake -B build -DBUILD_SHARED_LIBS=OFF -DICONV_EMBED_MODE=ON -DICONV_EMBED_PREFIX="myapp_"
 ```
 
 ## 使用
